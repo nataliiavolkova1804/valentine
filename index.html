@@ -1,25 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
+  <title>Будешь моим Валентином?</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <style>
-    :root {
-      --bg1: #0a0a1a;
-      --bg2: #12122e;
-      --card: #ffffffee;
-      --yes: #ff3b7a;
-      --yesHover: #ff1f68;
-    }
     * { box-sizing: border-box; }
     body {
       margin: 0;
       min-height: 100svh;
       display: grid;
       place-items: center;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
+      background: url('https://texturelabs.org/wp-content/uploads/Texturelabs_Sky_169S.jpg') center/cover fixed;
       font-family: system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
@@ -35,7 +28,7 @@
     .card {
       width: min(720px, 92vw);
       padding: 26px 22px;
-      background: var(--card);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(12px);
       border-radius: 22px;
       text-align: center;
@@ -53,7 +46,7 @@
       font-size: clamp(26px, 4vw, 44px);
       margin: 12px 0 18px;
       color: #000;
-      text-shadow: 0 1px 3px rgba(255,255,255,0.7);
+      text-shadow: 0 1px 3px rgba(255,255,255,0.8);
       font-weight: 800;
     }
     .button-zone {
@@ -80,10 +73,10 @@
     }
     #yesBtn {
       left: 18%;
-      background: var(--yes);
+      background: #ff3b7a;
       color: #fff;
     }
-    #yesBtn:hover { background: var(--yesHover); }
+    #yesBtn:hover { background: #ff1f68; }
     #noBtn {
       left: 62%;
       background: #e5e7eb;
@@ -124,29 +117,29 @@
 <body>
   <canvas id="confettiCanvas"></canvas>
   <main class="card">
-    <!-- ТВОЯ ГИФКА: Stormtrooper -->
+    <!-- Штурмовик с сердцем -->
     <img 
       class="art" 
       src="https://media.tenor.com/HhypJgZXm1cAAAAi/storm-trooper-star-wars.gif" 
-      alt="Stormtrooper with heart"
+      alt="Штурмовик с сердцем"
     />
 
-    <h1>Daniil, will you be my valentine?</h1>
+    <h1>Daniil, будешь моим Валентином?</h1>
 
     <section class="button-zone" id="zone">
-      <button id="yesBtn">Yes</button>
-      <button id="noBtn">No</button>
+      <button id="yesBtn">Да</button>
+      <button id="noBtn">Нет</button>
     </section>
 
-    <div class="hint" id="hint">"No" is hiding in a galaxy far, far away... 😈</div>
+    <div class="hint" id="hint">«Нет» прячется где-то в галактике...<br>Но если нажмёшь — дроиды тебя найдут! 😈</div>
 
     <section class="result" id="result">
-      <h2>I love you!</h2>
-      <!-- 🔥 ТВОЯ НОВАЯ ГИФКА ПОСЛЕ "YES" -->
+      <h2>Ура! ❤️</h2>
+      <!-- Люк и Лея с сердцем -->
       <img
         class="fireworks"
         src="https://media1.tenor.com/m/yvAldNNy-_4AAAAd/star-wars-valentine-valentines-day.gif"
-        alt="Luke and Leia with heart"
+        alt="Люк и Лея с сердцем"
       />
     </section>
   </main>
@@ -170,14 +163,44 @@
 
     const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });
 
-    function fullScreenConfetti() {
-      const end = Date.now() + 1600;
+    // УЛУЧШЕННЫЙ ФЕЙЕРВЕРК — больше частиц, ярче, дольше
+    function fullScreenFireworks() {
+      const duration = 3000; // 3 секунды
+      const end = Date.now() + duration;
+
       (function frame() {
-        confettiInstance({ particleCount: 12, spread: 90, startVelocity: 45, ticks: 180, origin: { x: Math.random(), y: Math.random() * 0.3 } });
+        confettiInstance({
+          particleCount: 15,
+          angle: 60,
+          spread: 80,
+          startVelocity: 45,
+          decay: 0.92,
+          colors: ['#ff3b7a', '#ffd6e7', '#ffffff', '#ff9ec0'],
+          origin: { x: 0, y: 0.5 }
+        });
+        confettiInstance({
+          particleCount: 15,
+          angle: 120,
+          spread: 80,
+          startVelocity: 45,
+          decay: 0.92,
+          colors: ['#ff3b7a', '#ffd6e7', '#ffffff', '#ff9ec0'],
+          origin: { x: 1, y: 0.5 }
+        });
         if (Date.now() < end) requestAnimationFrame(frame);
       })();
+
+      // Центральный взрыв через 300 мс
       setTimeout(() => {
-        confettiInstance({ particleCount: 300, spread: 140, startVelocity: 60, ticks: 220, origin: { x: 0.5, y: 0.55 } });
+        confettiInstance({
+          particleCount: 300,
+          spread: 160,
+          startVelocity: 60,
+          ticks: 250,
+          gravity: 0.8,
+          colors: ['#ff3b7a', '#ffffff', '#ffd6e7', '#ff9ec0', '#ff1f68'],
+          origin: { x: 0.5, y: 0.55 }
+        });
       }, 300);
     }
 
@@ -219,7 +242,7 @@
       hint.style.display = "none";
       result.style.display = "block";
       resizeConfettiCanvas();
-      fullScreenConfetti();
+      fullScreenFireworks(); // ← теперь это фейерверк!
     });
   </script>
 </body>
