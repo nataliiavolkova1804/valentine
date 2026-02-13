@@ -108,27 +108,6 @@
       filter: drop-shadow(0 10px 16px rgba(0,0,0,.4));
       border-radius: 12px;
     }
-
-    /* КНОПКА ДЛЯ ВИДЕО */
-    #videoButton {
-      display: none;
-      margin: 20px auto 0;
-      padding: 14px 32px;
-      font-size: 18px;
-      font-weight: 700;
-      background: #ff3b7a;
-      color: white;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(255, 59, 122, 0.4);
-      transition: transform 0.2s, background 0.2s;
-    }
-    #videoButton:hover {
-      background: #ff1f68;
-      transform: scale(1.03);
-    }
-
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -138,13 +117,14 @@
 <body>
   <canvas id="confettiCanvas"></canvas>
   <main class="card">
+    <!-- Штурмовик с сердцем -->
     <img 
       class="art" 
       src="https://media.tenor.com/HhypJgZXm1cAAAAi/storm-trooper-star-wars.gif" 
       alt="Штурмовик с сердцем"
     />
 
-    <h1>Daniil, будешь моим Валентином?</h1>
+    <h1>Данечка, ты будешь моим? Сегодня, завтра, всегда?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Да</button>
@@ -154,14 +134,13 @@
     <div class="hint" id="hint">«Нет» прячется где-то в галактике...<br>Но если нажмёшь — дроиды тебя найдут! 😈</div>
 
     <section class="result" id="result">
-      <h2>Ура! ❤️</h2>
+      <h2>Я люблю тебя! ❤️</h2>
+      <!-- Люк и Лея с сердцем -->
       <img
         class="fireworks"
         src="https://media1.tenor.com/m/yvAldNNy-_4AAAAd/star-wars-valentine-valentines-day.gif"
         alt="Люк и Лея с сердцем"
       />
-      <!-- КНОПКА ДЛЯ ВИДЕО -->
-      <button id="videoButton">Смотреть моё видео</button>
     </section>
   </main>
 
@@ -171,10 +150,7 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
-    const videoButton = document.getElementById("videoButton");
-
-    // === ТВОЯ ССЫЛКА НА GOOGLE DRIVE ===
-    const VIDEO_DRIVE_URL = "https://drive.google.com/file/d/1q0KDPryZWnP4gqfRQbhkkN2WadFOp0dF/view";
+    const confettiCanvas = document.getElementById("confettiCanvas");
 
     function resizeConfettiCanvas() {
       const dpr = Math.max(1, window.devicePixelRatio || 1);
@@ -182,14 +158,14 @@
       confettiCanvas.height = Math.floor(window.innerHeight * dpr);
     }
 
-    const confettiCanvas = document.getElementById("confettiCanvas");
     resizeConfettiCanvas();
     window.addEventListener("resize", resizeConfettiCanvas);
 
     const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });
 
+    // УЛУЧШЕННЫЙ ФЕЙЕРВЕРК — больше частиц, ярче, дольше
     function fullScreenFireworks() {
-      const duration = 3000;
+      const duration = 3000; // 3 секунды
       const end = Date.now() + duration;
 
       (function frame() {
@@ -214,6 +190,7 @@
         if (Date.now() < end) requestAnimationFrame(frame);
       })();
 
+      // Центральный взрыв через 300 мс
       setTimeout(() => {
         confettiInstance({
           particleCount: 300,
@@ -265,17 +242,7 @@
       hint.style.display = "none";
       result.style.display = "block";
       resizeConfettiCanvas();
-      fullScreenFireworks();
-
-      // ПОКАЖЕМ КНОПКУ ЧЕРЕЗ 7 СЕКУНД
-      setTimeout(() => {
-        videoButton.style.display = "inline-block";
-      }, 7000); // 7 секунд
-    });
-
-    // При клике на кнопку — открываем видео
-    videoButton.addEventListener("click", () => {
-      window.open(VIDEO_DRIVE_URL, '_blank');
+      fullScreenFireworks(); // ← теперь это фейерверк!
     });
   </script>
 </body>
