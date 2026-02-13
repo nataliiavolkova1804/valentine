@@ -14,22 +14,6 @@
       place-items: center;
       background: url('https://texturelabs.org/wp-content/uploads/Texturelabs_Sky_169S.jpg') center/cover fixed;
       font-family: system-ui, sans-serif;
-      overflow: hidden;<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Будешь моим Валентином?</title>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100svh;
-      display: grid;
-      place-items: center;
-      background: url('https://texturelabs.org/wp-content/uploads/Texturelabs_Sky_169S.jpg') center/cover fixed;
-      font-family: system-ui, sans-serif;
       overflow: hidden;
       padding: 16px;
     }
@@ -125,6 +109,26 @@
       border-radius: 12px;
     }
 
+    /* КНОПКА ДЛЯ ВИДЕО */
+    #videoButton {
+      display: none;
+      margin: 20px auto 0;
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: 700;
+      background: #ff3b7a;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255, 59, 122, 0.4);
+      transition: transform 0.2s, background 0.2s;
+    }
+    #videoButton:hover {
+      background: #ff1f68;
+      transform: scale(1.03);
+    }
+
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -140,7 +144,7 @@
       alt="Штурмовик с сердцем"
     />
 
-    <h1>Daniil, будешь моим Валентином?</h1>
+    <h1>Данечка, ты будешь моим? Сегодня, завтра,  всегда?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Да</button>
@@ -150,12 +154,14 @@
     <div class="hint" id="hint">«Нет» прячется где-то в галактике...<br>Но если нажмёшь — дроиды тебя найдут! 😈</div>
 
     <section class="result" id="result">
-      <h2>Ура! ❤️</h2>
+      <h2> Я люблю тебя! ❤️</h2>
       <img
         class="fireworks"
         src="https://media1.tenor.com/m/yvAldNNy-_4AAAAd/star-wars-valentine-valentines-day.gif"
         alt="Люк и Лея с сердцем"
       />
+      <!-- КНОПКА ДЛЯ ВИДЕО -->
+      <button id="videoButton">Тык</button>
     </section>
   </main>
 
@@ -165,10 +171,9 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
-    const confettiCanvas = document.getElementById("confettiCanvas");
+    const videoButton = document.getElementById("videoButton");
 
-    // === ССЫЛКА НА ТВОЁ ВИДЕО В GOOGLE DRIVE ===
-    // Чтобы ссылка работала, файл должен быть "доступен всем, у кого есть ссылка"
+    // === ТВОЯ ССЫЛКА НА GOOGLE DRIVE ===
     const VIDEO_DRIVE_URL = "https://drive.google.com/file/d/1q0KDPryZWnP4gqfRQbhkkN2WadFOp0dF/view";
 
     function resizeConfettiCanvas() {
@@ -177,6 +182,7 @@
       confettiCanvas.height = Math.floor(window.innerHeight * dpr);
     }
 
+    const confettiCanvas = document.getElementById("confettiCanvas");
     resizeConfettiCanvas();
     window.addEventListener("resize", resizeConfettiCanvas);
 
@@ -261,248 +267,15 @@
       resizeConfettiCanvas();
       fullScreenFireworks();
 
-      // 🔥 ОТКРЫТЬ ВИДЕО ЧЕРЕЗ 7 СЕКУНД
+      // ПОКАЖЕМ КНОПКУ ЧЕРЕЗ 7 СЕКУНД
       setTimeout(() => {
-        // Проверяем, разрешено ли открывать всплывающие окна
-        const newTab = window.open(VIDEO_DRIVE_URL, '_blank');
-        if (!newTab) {
-          // Если браузер заблокировал — покажем кнопку
-          alert("Видео готово! Нажми OK, чтобы открыть.");
-          window.open(VIDEO_DRIVE_URL, '_blank');
-        }
-      }, 7000); // 7000 мс = 7 секунд
-    });
-  </script>
-</body>
-</html>
-      padding: 16px;
-    }
-    #confettiCanvas {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 9999;
-    }
-    .card {
-      width: min(720px, 92vw);
-      padding: 26px 22px;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 18px 60px rgba(0,0,0,.5);
-    }
-    .art {
-      width: min(260px, 80vw);
-      height: auto;
-      margin: 0 auto 14px;
-      display: block;
-      filter: drop-shadow(0 10px 16px rgba(0,0,0,.4));
-      border-radius: 12px;
-    }
-    h1 {
-      font-size: clamp(26px, 4vw, 44px);
-      margin: 12px 0 18px;
-      color: #000;
-      text-shadow: 0 1px 3px rgba(255,255,255,0.8);
-      font-weight: 800;
-    }
-    .button-zone {
-      position: relative;
-      width: min(520px, 92%);
-      height: 150px;
-      margin: 0 auto;
-      touch-action: none;
-    }
-    button {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      padding: 16px 24px;
-      font-size: 18px;
-      font-weight: 800;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0,0,0,.35);
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      transition: transform .12s ease, background .12s ease;
-    }
-    #yesBtn {
-      left: 18%;
-      background: #ff3b7a;
-      color: #fff;
-    }
-    #yesBtn:hover { background: #ff1f68; }
-    #noBtn {
-      left: 62%;
-      background: #e5e7eb;
-      color: #111827;
-    }
-    .hint {
-      margin-top: 12px;
-      font-size: 13px;
-      opacity: .85;
-      color: #222;
-      text-shadow: 0 1px 2px rgba(255,255,255,0.6);
-    }
-    .result {
-      display: none;
-      margin-top: 18px;
-      animation: pop .35s ease;
-    }
-    .result h2 {
-      font-size: clamp(30px, 4.5vw, 46px);
-      margin: 10px 0;
-      color: #ff3b7a;
-      text-shadow: 0 1px 3px rgba(255,100,150,0.5);
-    }
-    .fireworks {
-      width: min(260px, 80vw);
-      height: auto;
-      margin: 0 auto 10px;
-      display: block;
-      filter: drop-shadow(0 10px 16px rgba(0,0,0,.4));
-      border-radius: 12px;
-    }
-    @keyframes pop {
-      from { transform: scale(.96); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-  </style>
-</head>
-<body>
-  <canvas id="confettiCanvas"></canvas>
-  <main class="card">
-    <!-- Штурмовик с сердцем -->
-    <img 
-      class="art" 
-      src="https://media.tenor.com/HhypJgZXm1cAAAAi/storm-trooper-star-wars.gif" 
-      alt="Штурмовик с сердцем"
-    />
-
-    <h1>Данечка, ты будешь моим? Сегодня, завтра, всегда?</h1>
-
-    <section class="button-zone" id="zone">
-      <button id="yesBtn">Да</button>
-      <button id="noBtn">Нет</button>
-    </section>
-
-    <div class="hint" id="hint">«Нет» прячется где-то в галактике...<br>Но если нажмёшь — дроиды тебя найдут! 😈</div>
-
-    <section class="result" id="result">
-      <h2>Я люблю тебя! ❤️</h2>
-      <!-- Люк и Лея с сердцем -->
-      <img
-        class="fireworks"
-        src="https://media1.tenor.com/m/yvAldNNy-_4AAAAd/star-wars-valentine-valentines-day.gif"
-        alt="Люк и Лея с сердцем"
-      />
-    </section>
-  </main>
-
-  <script>
-    const zone = document.getElementById("zone");
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const result = document.getElementById("result");
-    const hint = document.getElementById("hint");
-    const confettiCanvas = document.getElementById("confettiCanvas");
-
-    function resizeConfettiCanvas() {
-      const dpr = Math.max(1, window.devicePixelRatio || 1);
-      confettiCanvas.width = Math.floor(window.innerWidth * dpr);
-      confettiCanvas.height = Math.floor(window.innerHeight * dpr);
-    }
-
-    resizeConfettiCanvas();
-    window.addEventListener("resize", resizeConfettiCanvas);
-
-    const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });
-
-    // УЛУЧШЕННЫЙ ФЕЙЕРВЕРК — больше частиц, ярче, дольше
-    function fullScreenFireworks() {
-      const duration = 3000; // 3 секунды
-      const end = Date.now() + duration;
-
-      (function frame() {
-        confettiInstance({
-          particleCount: 15,
-          angle: 60,
-          spread: 80,
-          startVelocity: 45,
-          decay: 0.92,
-          colors: ['#ff3b7a', '#ffd6e7', '#ffffff', '#ff9ec0'],
-          origin: { x: 0, y: 0.5 }
-        });
-        confettiInstance({
-          particleCount: 15,
-          angle: 120,
-          spread: 80,
-          startVelocity: 45,
-          decay: 0.92,
-          colors: ['#ff3b7a', '#ffd6e7', '#ffffff', '#ff9ec0'],
-          origin: { x: 1, y: 0.5 }
-        });
-        if (Date.now() < end) requestAnimationFrame(frame);
-      })();
-
-      // Центральный взрыв через 300 мс
-      setTimeout(() => {
-        confettiInstance({
-          particleCount: 300,
-          spread: 160,
-          startVelocity: 60,
-          ticks: 250,
-          gravity: 0.8,
-          colors: ['#ff3b7a', '#ffffff', '#ffd6e7', '#ff9ec0', '#ff1f68'],
-          origin: { x: 0.5, y: 0.55 }
-        });
-      }, 300);
-    }
-
-    let yesScale = 1;
-    function growYes() {
-      yesScale = Math.min(2.2, yesScale + 0.1);
-      yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
-    }
-
-    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
-
-    function moveNo(px, py) {
-      const z = zone.getBoundingClientRect();
-      const b = noBtn.getBoundingClientRect();
-      let dx = (b.left + b.width / 2) - px;
-      let dy = (b.top + b.height / 2) - py;
-      let mag = Math.hypot(dx, dy) || 1;
-      dx /= mag; dy /= mag;
-      let newLeft = (b.left - z.left) + dx * 150;
-      let newTop = (b.top - z.top) + dy * 150;
-      newLeft = clamp(newLeft, 0, z.width - b.width);
-      newTop = clamp(newTop, 0, z.height - b.height);
-      noBtn.style.left = newLeft + "px";
-      noBtn.style.top = newTop + "px";
-      noBtn.style.transform = "none";
-      growYes();
-    }
-
-    zone.addEventListener("pointermove", e => {
-      const b = noBtn.getBoundingClientRect();
-      const d = Math.hypot((b.left + b.width / 2) - e.clientX, (b.top + b.height / 2) - e.clientY);
-      if (d < 140) moveNo(e.clientX, e.clientY);
+        videoButton.style.display = "inline-block";
+      }, 7000); // 7 секунд
     });
 
-    noBtn.addEventListener("click", e => e.preventDefault());
-
-    yesBtn.addEventListener("click", () => {
-      zone.style.display = "none";
-      hint.style.display = "none";
-      result.style.display = "block";
-      resizeConfettiCanvas();
-      fullScreenFireworks(); // ← теперь это фейерверк!
+    // При клике на кнопку — открываем видео
+    videoButton.addEventListener("click", () => {
+      window.open(VIDEO_DRIVE_URL, '_blank');
     });
   </script>
 </body>
