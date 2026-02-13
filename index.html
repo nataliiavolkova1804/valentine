@@ -109,6 +109,26 @@
       border-radius: 12px;
     }
 
+    /* КНОПКА ДЛЯ ВИДЕО */
+    #videoButton {
+      display: none;
+      margin: 20px auto 0;
+      padding: 14px 32px;
+      font-size: 18px;
+      font-weight: 700;
+      background: #ff3b7a;
+      color: white;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(255, 59, 122, 0.4);
+      transition: transform 0.2s, background 0.2s;
+    }
+    #videoButton:hover {
+      background: #ff1f68;
+      transform: scale(1.03);
+    }
+
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -140,6 +160,8 @@
         src="https://media1.tenor.com/m/yvAldNNy-_4AAAAd/star-wars-valentine-valentines-day.gif"
         alt="Люк и Лея с сердцем"
       />
+      <!-- КНОПКА ДЛЯ ВИДЕО -->
+      <button id="videoButton">Смотреть моё видео</button>
     </section>
   </main>
 
@@ -149,10 +171,9 @@
     const noBtn = document.getElementById("noBtn");
     const result = document.getElementById("result");
     const hint = document.getElementById("hint");
-    const confettiCanvas = document.getElementById("confettiCanvas");
+    const videoButton = document.getElementById("videoButton");
 
-    // === ССЫЛКА НА ТВОЁ ВИДЕО В GOOGLE DRIVE ===
-    // Чтобы ссылка работала, файл должен быть "доступен всем, у кого есть ссылка"
+    // === ТВОЯ ССЫЛКА НА GOOGLE DRIVE ===
     const VIDEO_DRIVE_URL = "https://drive.google.com/file/d/1q0KDPryZWnP4gqfRQbhkkN2WadFOp0dF/view";
 
     function resizeConfettiCanvas() {
@@ -161,6 +182,7 @@
       confettiCanvas.height = Math.floor(window.innerHeight * dpr);
     }
 
+    const confettiCanvas = document.getElementById("confettiCanvas");
     resizeConfettiCanvas();
     window.addEventListener("resize", resizeConfettiCanvas);
 
@@ -245,16 +267,15 @@
       resizeConfettiCanvas();
       fullScreenFireworks();
 
-      // 🔥 ОТКРЫТЬ ВИДЕО ЧЕРЕЗ 7 СЕКУНД
+      // ПОКАЖЕМ КНОПКУ ЧЕРЕЗ 7 СЕКУНД
       setTimeout(() => {
-        // Проверяем, разрешено ли открывать всплывающие окна
-        const newTab = window.open(VIDEO_DRIVE_URL, '_blank');
-        if (!newTab) {
-          // Если браузер заблокировал — покажем кнопку
-          alert("Видео готово! Нажми OK, чтобы открыть.");
-          window.open(VIDEO_DRIVE_URL, '_blank');
-        }
-      }, 7000); // 7000 мс = 7 секунд
+        videoButton.style.display = "inline-block";
+      }, 7000); // 7 секунд
+    });
+
+    // При клике на кнопку — открываем видео
+    videoButton.addEventListener("click", () => {
+      window.open(VIDEO_DRIVE_URL, '_blank');
     });
   </script>
 </body>
