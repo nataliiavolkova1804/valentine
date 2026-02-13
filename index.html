@@ -108,6 +108,7 @@
       filter: drop-shadow(0 10px 16px rgba(0,0,0,.4));
       border-radius: 12px;
     }
+
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
@@ -117,14 +118,13 @@
 <body>
   <canvas id="confettiCanvas"></canvas>
   <main class="card">
-    <!-- Штурмовик с сердцем -->
     <img 
       class="art" 
       src="https://media.tenor.com/HhypJgZXm1cAAAAi/storm-trooper-star-wars.gif" 
       alt="Штурмовик с сердцем"
     />
 
-    <h1>Данечка, ты будешь моим? Сегодня, завтра, всегда?</h1>
+    <h1>Daniil, будешь моим Валентином?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Да</button>
@@ -134,8 +134,7 @@
     <div class="hint" id="hint">«Нет» прячется где-то в галактике...<br>Но если нажмёшь — дроиды тебя найдут! 😈</div>
 
     <section class="result" id="result">
-      <h2>Я люблю тебя! ❤️</h2>
-      <!-- Люк и Лея с сердцем -->
+      <h2>Ура! ❤️</h2>
       <img
         class="fireworks"
         src="https://media1.tenor.com/m/yvAldNNy-_4AAAAd/star-wars-valentine-valentines-day.gif"
@@ -152,6 +151,10 @@
     const hint = document.getElementById("hint");
     const confettiCanvas = document.getElementById("confettiCanvas");
 
+    // === ССЫЛКА НА ТВОЁ ВИДЕО В GOOGLE DRIVE ===
+    // Чтобы ссылка работала, файл должен быть "доступен всем, у кого есть ссылка"
+    const VIDEO_DRIVE_URL = "https://drive.google.com/file/d/1q0KDPryZWnP4gqfRQbhkkN2WadFOp0dF/view";
+
     function resizeConfettiCanvas() {
       const dpr = Math.max(1, window.devicePixelRatio || 1);
       confettiCanvas.width = Math.floor(window.innerWidth * dpr);
@@ -163,9 +166,8 @@
 
     const confettiInstance = confetti.create(confettiCanvas, { resize: false, useWorker: true });
 
-    // УЛУЧШЕННЫЙ ФЕЙЕРВЕРК — больше частиц, ярче, дольше
     function fullScreenFireworks() {
-      const duration = 3000; // 3 секунды
+      const duration = 3000;
       const end = Date.now() + duration;
 
       (function frame() {
@@ -190,7 +192,6 @@
         if (Date.now() < end) requestAnimationFrame(frame);
       })();
 
-      // Центральный взрыв через 300 мс
       setTimeout(() => {
         confettiInstance({
           particleCount: 300,
@@ -242,7 +243,18 @@
       hint.style.display = "none";
       result.style.display = "block";
       resizeConfettiCanvas();
-      fullScreenFireworks(); // ← теперь это фейерверк!
+      fullScreenFireworks();
+
+      // 🔥 ОТКРЫТЬ ВИДЕО ЧЕРЕЗ 7 СЕКУНД
+      setTimeout(() => {
+        // Проверяем, разрешено ли открывать всплывающие окна
+        const newTab = window.open(VIDEO_DRIVE_URL, '_blank');
+        if (!newTab) {
+          // Если браузер заблокировал — покажем кнопку
+          alert("Видео готово! Нажми OK, чтобы открыть.");
+          window.open(VIDEO_DRIVE_URL, '_blank');
+        }
+      }, 7000); // 7000 мс = 7 секунд
     });
   </script>
 </body>
